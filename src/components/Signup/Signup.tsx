@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 
 import * as UserActions from '../../actions/user';
-
 import { Container, Checkbox } from "./styles";
 
 interface SignupProps {

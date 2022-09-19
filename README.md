@@ -64,10 +64,10 @@ The following packages were used to build this project:
 - [Home](/src/pages/Home.tsx)
     - [Signup](/src/components/Signup/Signup.tsx) - when username is not found on local storage
     - [Feed](/src/components/Feed/Feed.tsx) - renders when user is logged
-      - [WritePost](/src/components/WritePost/WritePost.tsx) - also inside EditItem
+      - [WritePost](/src/components/WritePost/WritePost.tsx)
       - [Post](/src/components/Post/Post.tsx)
         - [DeleteAlert](/src/components/DeleteAlert/DeleteAlert.tsx)
-        - [EditItem](/src/components/EditItem/EditItem.tsx)
+        - [EditPost](/src/components/EditPost/EditPost.tsx)
 
 ---
 

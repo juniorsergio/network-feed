@@ -1,32 +1,32 @@
-import { v4 as uuidv4 } from 'uuid';
+import { Store } from "."
 
 type Action = {
-    type: 'CREATE_POST' | 'UPDATE_POST' | 'DELETE_POST',
+    type: 'GET_POSTS' | 'CREATE_POST' | 'UPDATE_POST' | 'DELETE_POST',
+    postId?: number,
     username?: string,
+    created_datetime?: Date,
     title?: string,
     content?: string,
-    postId?: string
+    data?: FeedType[]
 }
 
-const INITIAL_STATE = [
-    {
-        id: uuidv4(),
-        title: 'My First Post at CodeLeap Network!',
-        author: 'Junior',
-        publishedAt: new Date('09-18-2022 20:00'),
-        content: 'Curabitur suscipit suscipit tellus. Phasellus consectetuer vestibulum elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas egestas arcu quis ligula mattis placerat. Duis vel nibh at velit scelerisque suscipit.\nDuis lobortis massa imperdiet quam. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Fusce a quam. Nullam vel sem. Nullam cursus lacinia erat.'
-    }
-]
+export type FeedType = {
+    id: number,
+    title: string,
+    username: string,
+    created_datetime: Date,
+    content: string
+}
 
-export default function feed(state = INITIAL_STATE, action: Action){
+export default function feed(state: FeedType[], action: Action){
     switch(action.type){
         case 'CREATE_POST':
             return [
                 {
-                    id: uuidv4(),
+                    id: action.postId,
                     title: action.title,
-                    author: action.username,
-                    publishedAt: new Date(),
+                    username: action.username,
+                    created_datetime: action.created_datetime,
                     content: action.content
                 },
                 ...state
@@ -46,7 +46,9 @@ export default function feed(state = INITIAL_STATE, action: Action){
             })
         case 'DELETE_POST':
             return state.filter(post => post.id !== action.postId)
+        case 'GET_POSTS':
+            return action.data
         default:
-            return state
+            return null
     }
 }

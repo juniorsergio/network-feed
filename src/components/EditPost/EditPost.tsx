@@ -3,43 +3,45 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 
 import * as FeedActions from '../../actions/feed';
-import { Store } from "../../redux";
-import { FeedType } from "../../redux/feed";
-
 import { Container } from "./styles";
 
 interface WritePostProps {
-    createPost: (data: FeedType) => void,
-    username: string
+    updatePost: (title: string, content: string, postId: number) => void,
+    onRequestClose: () => void,
+    title: string,
+    content: string,
+    postId: number
 }
 
-function WritePost({ createPost, username}: WritePostProps){  
-    const [ newPostTitle, setNewPostTitle ] = useState('')
-    const [ newPostContent, setNewPostContent ] = useState('')
+function EditPost({ updatePost, onRequestClose, title, content, postId}: WritePostProps){  
+    const [ newPostTitle, setNewPostTitle ] = useState(title)
+    const [ newPostContent, setNewPostContent ] = useState(content)
 
     async function handleWritePost(event: FormEvent){
         event.preventDefault()
 
-        const body = { username, title: newPostTitle, content: newPostContent }
+        const body = { title: newPostTitle, content: newPostContent }
 
-        const response = await fetch('https://dev.codeleap.co.uk/careers/', {
-            method: 'POST',
+        await fetch(`https://dev.codeleap.co.uk/careers/${postId}/`, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
         })
 
-        const data = await response.json()
+        updatePost(newPostTitle, newPostContent, postId)
+        if (onRequestClose){
+            onRequestClose()
+        }
 
-        createPost(data)
         setNewPostTitle('')
         setNewPostContent('')
     }
     
     return (
         <Container>
-            <h2>What's on your mind?</h2>
+            <h2>Edit item</h2>
             <span>Title</span>
             <input type='text' placeholder='Post title' value={newPostTitle} onChange={(e) => setNewPostTitle(e.target.value)} />
             <span>Content</span>
@@ -48,18 +50,14 @@ function WritePost({ createPost, username}: WritePostProps){
                 disabled={newPostTitle === '' || newPostContent === ''}
                 onClick={handleWritePost}
             >
-                CREATE
+                SAVE
             </button>
         </Container>
     )
 }
 
-const mapStateToProps = (store: Store) => ({
-	username: store.user.name
-})
-
 const mapDispatchToProps = (dispatch: Dispatch) => (
     bindActionCreators(FeedActions, dispatch)
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(WritePost)
+export default connect(null, mapDispatchToProps)(EditPost)

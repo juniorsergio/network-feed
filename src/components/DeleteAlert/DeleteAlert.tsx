@@ -1,16 +1,21 @@
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
+
 import * as FeedActions from '../../actions/feed';
 import { Container, ConfirmationButtons } from "./styles";
 
 interface DeleteAlertProps {
     onRequestClose: () => void,
-    deletePost: (postId: string) => void,
-    postId: string
+    deletePost: (postId: number) => void,
+    postId: number
 }
 
 function DeleteAlert({ onRequestClose, deletePost, postId }: DeleteAlertProps){
-    function handleDeletePost(){
+    async function handleDeletePost(){      
+        await fetch(`https://dev.codeleap.co.uk/careers/${postId}/`, {
+            method: 'DELETE'
+        })
+        
         deletePost(postId)
         onRequestClose()
     }

@@ -9,20 +9,19 @@ export type Store = {
         name: string,
         persistant: boolean
     },
-    feed: {
-        id: string,
-        title: string,
-        author: string,
-        publishedAt: Date,
-        content: string
-    }[]
+    feed: []
 }
 
 // convert object to string and store in localStorage
 function saveToLocalStorage(store: Store) {
     try {
-        const serialisedState = JSON.stringify(store)
-        localStorage.setItem("persistantState", serialisedState)
+        if (store.user.persistant){
+            const storedUser = JSON.stringify(store.user)
+            localStorage.setItem("user", storedUser)
+        }
+        else {
+            localStorage.removeItem("user")
+        }
     } catch (e) {
         console.warn(e)
     }
@@ -32,11 +31,11 @@ function saveToLocalStorage(store: Store) {
 // invalid output must be undefined
 function loadFromLocalStorage() {
     try {
-        const serialisedState = localStorage.getItem("persistantState")
-        if (serialisedState === null){
+        const storedUser = localStorage.getItem("user")
+        if (storedUser === null){
             return undefined
         }
-        return JSON.parse(serialisedState)
+        return JSON.parse(storedUser)
     } catch (e) {
         console.warn(e)
         return undefined
@@ -48,7 +47,9 @@ const store = configureStore({
         user,
         feed
     }),
-    preloadedState: loadFromLocalStorage()
+    preloadedState: {
+        user: loadFromLocalStorage()
+    }
 })
 
 // listen for store changes and use saveToLocalStorage to

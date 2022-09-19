@@ -8,16 +8,16 @@ import ReactModal from 'react-modal';
 
 import { Store } from "../../redux";
 import DeleteAlert from "../DeleteAlert/DeleteAlert";
-import WritePost from "../WritePost/WritePost";
+import EditPost from "../EditPost/EditPost";
 
 import { Container, Title, PostInfo, PostOptions } from "./styles";
 
 interface PostProps {
     post: {
-        id: string,
+        id: number,
         title: string,
-        author: string,
-        publishedAt: Date,
+        username: string,
+        created_datetime: Date,
         content: string
     },
     username: string
@@ -28,7 +28,7 @@ function Post({ post, username }: PostProps){
     const [ isEditPostModalOpen, setIsEditPostModalOpen ] = useState(false)
 
     const postContent = '<p>' + post.content.replace(/\n/g, '</p><p>') + '</p>' 
-    const publishedDateRelativeToNow = formatDistanceToNow(new Date(post.publishedAt), {
+    const publishedDateRelativeToNow = formatDistanceToNow(new Date(post.created_datetime), {
         locale: enUS,
         addSuffix: true
     })
@@ -53,7 +53,7 @@ function Post({ post, username }: PostProps){
         <Container>
             <Title>
                 <h2>{post.title}</h2>
-                { username === post.author &&
+                { username === post.username &&
                     <PostOptions>
                         <button title='Delete post' onClick={handleOpenDeleteAlertModal}>
                             <Trash size={24} />
@@ -66,7 +66,7 @@ function Post({ post, username }: PostProps){
             </Title>
 
             <PostInfo>
-                <span>@{post.author}</span>
+                <span>@{post.username}</span>
                 <span>{publishedDateRelativeToNow}</span>
             </PostInfo>
 
@@ -92,7 +92,7 @@ function Post({ post, username }: PostProps){
                 className='react-modal-content'
                 ariaHideApp={false}
             >
-                <WritePost
+                <EditPost
                     onRequestClose={handleCloseEditPostModal}
                     title={post.title}
                     content={post.content}
