@@ -6,7 +6,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "dev": "vite",
+    "dev": "vite --port 5173",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -14,7 +14,6 @@
     "@reduxjs/toolkit": "^1.8.5",
     "date-fns": "^2.29.3",
     "interweave": "^13.0.0",
-    "phosphor-icons": "^1.4.2",
     "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -26,7 +25,6 @@
   },
   "devDependencies": {
     "@types/date-fns": "^2.6.0",
-    "@types/prismic-dom": "^2.1.1",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/react-modal": "^3.13.1",
