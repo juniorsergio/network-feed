@@ -281,7 +281,7 @@ https://fb.me/react-async-component-lifecycle-hooks`)}if(typeof e.getDerivedStat
     }
 
     body {
-        background-image: radial-gradient(circle, var(--grey-800), black);
+        background-image: radial-gradient(circle, var(--grey-700), var(--grey-900));
         background-attachment: fixed;
     }
 
