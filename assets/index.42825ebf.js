@@ -153,7 +153,7 @@ https://fb.me/react-async-component-lifecycle-hooks`)}if(typeof e.getDerivedStat
         margin-left: auto;
         margin-right: 0;
     }
-`;function gS({createPost:e,updatePost:t,username:n,onRequestClose:r,title:o="",content:i="",postId:l=""}){const[u,a]=H.exports.useState(o),[s,c]=H.exports.useState(i);function d(v){v.preventDefault(),e(n,u,s),a(""),c("")}function p(v){v.preventDefault(),t(u,s,l),a(""),c(""),r&&r()}return ce(yS,{children:[P("h2",{children:o===""?"What's on your mind?":"Edit item"}),P("span",{children:"Title"}),P("input",{type:"text",placeholder:"Post title",value:u,onChange:v=>a(v.target.value)}),P("span",{children:"Content"}),P("textarea",{placeholder:"Post content",value:s,onChange:v=>c(v.target.value)}),P("button",{onClick:o===""?d:p,children:o===""?"CREATE":"SAVE"})]})}const wS=e=>({username:e.user.name}),SS=e=>Gl(nm,e),mm=Ar(wS,SS)(gS),kS=yt.div`
+`;function gS({createPost:e,updatePost:t,username:n,onRequestClose:r,title:o="",content:i="",postId:l=""}){const[u,a]=H.exports.useState(o),[s,c]=H.exports.useState(i);function d(p){p.preventDefault(),o===""?e(n,u,s):(t(u,s,l),r&&r()),a(""),c("")}return ce(yS,{children:[P("h2",{children:o===""?"What's on your mind?":"Edit item"}),P("span",{children:"Title"}),P("input",{type:"text",placeholder:"Post title",value:u,onChange:p=>a(p.target.value)}),P("span",{children:"Content"}),P("textarea",{placeholder:"Post content",value:s,onChange:p=>c(p.target.value)}),P("button",{disabled:u===""||s==="",onClick:d,children:o===""?"CREATE":"SAVE"})]})}const wS=e=>({username:e.user.name}),SS=e=>Gl(nm,e),mm=Ar(wS,SS)(gS),kS=yt.div`
     display: flex;
     flex-direction: column;
 
@@ -248,7 +248,7 @@ https://fb.me/react-async-component-lifecycle-hooks`)}if(typeof e.getDerivedStat
     input {
         width: auto;
     }
-`;function bS({setUsername:e}){const[t,n]=H.exports.useState("");function r(){const o=document.getElementById("keep-connected");e(t,o.checked),n("")}return ce(DS,{children:[P("h1",{children:"Welcome to CodeLeap Network!"}),P("p",{children:"Please enter your username"}),P("input",{type:"text",placeholder:"John Doe",value:t,onChange:o=>n(o.target.value)}),ce("div",{className:"send",children:[ce(IS,{children:[P("input",{type:"checkbox",id:"keep-connected"}),P("label",{htmlFor:"keep-connected",children:"Keep me connected"})]}),P("button",{onClick:r,children:"ENTER"})]})]})}const jS=e=>Gl(vm,e),zS=Ar(null,jS)(bS),FS=fS`
+`;function bS({setUsername:e}){const[t,n]=H.exports.useState("");function r(){const i=document.getElementById("keep-connected");e(t,i.checked),n("")}function o(i){(/^[a-zA-Z\s]+$/.test(i)||i==="")&&n(i)}return ce(DS,{children:[P("h1",{children:"Welcome to CodeLeap Network!"}),P("p",{children:"Please enter your username"}),P("input",{type:"text",placeholder:"John Doe",pattern:"^[a-zA-Z]+$",value:t,onChange:i=>o(i.target.value)}),ce("div",{className:"send",children:[ce(IS,{children:[P("input",{type:"checkbox",id:"keep-connected"}),P("label",{htmlFor:"keep-connected",children:"Keep me connected"})]}),P("button",{disabled:t==="",onClick:r,children:"ENTER"})]})]})}const jS=e=>Gl(vm,e),zS=Ar(null,jS)(bS),FS=fS`
     :root {
         --white: #fff;
         --grey-100: #e1e1e6;
@@ -309,7 +309,7 @@ https://fb.me/react-async-component-lifecycle-hooks`)}if(typeof e.getDerivedStat
     }
 
     button {
-        background: black;
+        background: var(--purple);
         color: white;
         font-weight: bold;
 
@@ -318,12 +318,16 @@ https://fb.me/react-async-component-lifecycle-hooks`)}if(typeof e.getDerivedStat
 
         border: none;
         border-radius: 8px;
-        cursor: pointer;
 
-        transition: background-color 0.2s;
+        transition: filter 0.2s;
 
-        &:hover {
-            background: var(--grey-800); 
+        &:hover:not(:disabled) {
+            filter: brightness(0.6);
+            cursor: pointer;
+        }
+
+        &:disabled {
+            background: var(--grey-800);
         }
     }
 
