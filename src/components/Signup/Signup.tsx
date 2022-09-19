@@ -13,24 +13,36 @@ interface SignupProps {
 function Signup({ setUsername }: SignupProps){
     const [ inputName, setInputName ] = useState('')
 
-    function handleNameInput(){
-        const keepConnected = document.getElementById("keep-connected") as HTMLInputElement
-        
+    function handleSetNameInput(){
+        const keepConnected = document.getElementById("keep-connected") as HTMLInputElement     
         setUsername(inputName, keepConnected.checked)
         setInputName('')
+    }
+
+    function handleChangeNameInput(name: string){
+        if (/^[a-zA-Z\s]+$/.test(name) || name === ''){
+            setInputName(name)
+        }
     }
 
     return (
         <Container>
             <h1>Welcome to CodeLeap Network!</h1>
             <p>Please enter your username</p>
-            <input type='text' placeholder='John Doe' value={inputName} onChange={(e) => setInputName(e.target.value)}/>          
+            <input
+                type='text'
+                placeholder='John Doe'
+                pattern="^[a-zA-Z]+$"
+                value={inputName}
+                onChange={(e) => handleChangeNameInput(e.target.value)}
+            />
+
             <div className='send'>
                 <Checkbox>
                     <input type='checkbox' id='keep-connected' />
                     <label htmlFor='keep-connected'>Keep me connected</label>
                 </Checkbox>
-                <button onClick={handleNameInput}>ENTER</button>
+                <button disabled={inputName === ''} onClick={handleSetNameInput}>ENTER</button>
             </div>
         </Container>
     )

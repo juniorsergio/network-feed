@@ -19,19 +19,19 @@ function WritePost({ createPost, updatePost, username, onRequestClose, title = '
     const [ newPostTitle, setNewPostTitle ] = useState(title)
     const [ newPostContent, setNewPostContent ] = useState(content)
 
-    function handleCreateNewPost(event: FormEvent){
+    function handleWritePost(event: FormEvent){
         event.preventDefault()
-        createPost(username, newPostTitle, newPostContent)
-        setNewPostTitle('')
-        setNewPostContent('')
-    }
 
-    function handleEditPost(event: FormEvent){
-        event.preventDefault()
-        updatePost(newPostTitle, newPostContent, postId)
+        if (title === ''){
+            createPost(username, newPostTitle, newPostContent)
+        }
+        else {
+            updatePost(newPostTitle, newPostContent, postId)
+            if (onRequestClose) onRequestClose()
+        }
+
         setNewPostTitle('')
         setNewPostContent('')
-        if (onRequestClose) onRequestClose()
     }
     
     return (
@@ -41,7 +41,12 @@ function WritePost({ createPost, updatePost, username, onRequestClose, title = '
             <input type='text' placeholder='Post title' value={newPostTitle} onChange={(e) => setNewPostTitle(e.target.value)} />
             <span>Content</span>
             <textarea placeholder='Post content' value={newPostContent} onChange={(e) => setNewPostContent(e.target.value)} />
-            <button onClick={title === '' ? handleCreateNewPost : handleEditPost}>{title === '' ? 'CREATE' : 'SAVE'}</button>
+            <button
+                disabled={newPostTitle === '' || newPostContent === ''}
+                onClick={handleWritePost}
+            >
+                {title === '' ? 'CREATE' : 'SAVE'}
+            </button>
         </Container>
     )
 }

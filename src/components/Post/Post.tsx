@@ -12,16 +12,14 @@ import WritePost from "../WritePost/WritePost";
 
 import { Container, Title, PostInfo, PostOptions } from "./styles";
 
-export type PostType = {
-    id: string,
-    title: string,
-    author: string,
-    publishedAt: Date,
-    content: string
-}
-
 interface PostProps {
-    post: PostType,
+    post: {
+        id: string,
+        title: string,
+        author: string,
+        publishedAt: Date,
+        content: string
+    },
     username: string
 }
 

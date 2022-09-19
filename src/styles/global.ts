@@ -61,7 +61,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     button {
-        background: black;
+        background: var(--purple);
         color: white;
         font-weight: bold;
 
@@ -70,12 +70,16 @@ export const GlobalStyles = createGlobalStyle`
 
         border: none;
         border-radius: 8px;
-        cursor: pointer;
 
-        transition: background-color 0.2s;
+        transition: filter 0.2s;
 
-        &:hover {
-            background: var(--grey-800); 
+        &:hover:not(:disabled) {
+            filter: brightness(0.6);
+            cursor: pointer;
+        }
+
+        &:disabled {
+            background: var(--grey-800);
         }
     }
 
