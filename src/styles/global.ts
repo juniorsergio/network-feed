@@ -33,7 +33,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        background-image: radial-gradient(circle, var(--grey-800), black);
+        background-image: radial-gradient(circle, var(--grey-700), var(--grey-900));
         background-attachment: fixed;
     }
 
